@@ -82,7 +82,7 @@
       display: block;
       font-size: 18px;
     }
-    #pantallaRun {
+ #pantallaRun {
   top: 0;
   left: 0;
   width: 100%;
@@ -90,12 +90,15 @@
   background: linear-gradient(-45deg, #0b3d91, #0e592d, #123c6c, #144d2a);
   background-size: 400% 400%;
   animation: animarRun 15s ease infinite;
-  display: flex;
+  /* NO PONGAS display: flex directamente aquí */
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   padding-top: 80px;
   z-index: 1;
+}
+#pantallaRun.show {
+  display: flex;
 }
 
 @keyframes animarRun {
@@ -152,20 +155,22 @@
       stats: document.getElementById("pantallaStats")
     };
 
-    function showScreen(screenName) {
-     for (let key in screens) {
+function showScreen(screenName) {
+  for (let key in screens) {
     screens[key].style.display = "none";
+    screens[key].classList.remove("show");
   }
   screens[screenName].style.display = "block";
+  screens[screenName].classList.add("show");
 
-  // Asegurar que los mapas se rendericen bien si su contenedor estuvo oculto
+  // Actualizar mapa si aplica
   if (screenName === "home" && mapHome) {
     setTimeout(() => mapHome.invalidateSize(), 100);
   }
   if (screenName === "run" && mapRun) {
     setTimeout(() => mapRun.invalidateSize(), 100);
   }
-    }
+}
     document.getElementById("btnHome").addEventListener("click", () => showScreen("home"));
     document.getElementById("btnRun").addEventListener("click", () => showScreen("run"));
     document.getElementById("btnStats").addEventListener("click", () => showScreen("stats"));
