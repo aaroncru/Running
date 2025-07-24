@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Arctic Dash</title>
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Carga de íconos Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     html, body {
@@ -31,7 +33,7 @@
     h1 {
       color: white;
       text-align: center;
-      padding-top: 2%;
+      padding-top: 1.5%;
       font-size: 3rem;
       text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
     }
@@ -43,20 +45,21 @@
       background-color: #B0A7A7;
       display: flex;
       justify-content: space-around;
-      padding: 10px 0;
+      padding: 6px 0; /* más delgada */
       z-index: 1000;
     }
 
     .footer-button {
       color: white;
       text-align: center;
-      font-size: 14px;
+      font-size: 10px; /* texto más pequeño */
       text-decoration: none;
     }
 
     .footer-button i {
-      font-size: 24px;
-      margin-bottom: 5px;
+      font-size: 16px; /* ícono más pequeño */
+      margin-bottom: 3px;
+      display: block;
     }
   </style>
 </head>
@@ -65,15 +68,15 @@
 
   <div class="footer-bar">
     <a href="#" class="footer-button">
-      <i class="fa-solid fa-home"></i><br>
+      <i class="fa-solid fa-home"></i>
       Home
     </a>
     <a href="#" class="footer-button">
-      <i class="fa-solid fa-running"></i><br>
+      <i class="fa-solid fa-running"></i>
       Let's Run
     </a>
     <a href="#" class="footer-button">
-      <i class="fa-solid fa-chart-line"></i><br>
+      <i class="fa-solid fa-chart-line"></i>
       Stats
     </a>
   </div>
