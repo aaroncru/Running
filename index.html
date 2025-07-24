@@ -82,12 +82,11 @@
   <div id="map"></div>
 
   <div class="footer-bar">
-    <a href="index.html" class="footer-button"><i class="fa-solid fa-home"></i>Home</a>
+    <a href="#" class="footer-button" id="btnHome"><i class="fa-solid fa-home"></i>Home</a>
     <a href="run.html" class="footer-button"><i class="fa-solid fa-running"></i>Let's Run</a>
     <a href="stats.html" class="footer-button"><i class="fa-solid fa-chart-line"></i>Stats</a>
   </div>
-
-  <script>
+<script>
     const map = L.map('map').setView([0, 0], 15);
     const marker = L.marker([0, 0]).addTo(map);
 
@@ -122,6 +121,16 @@
 
     setInterval(actualizarUbicacion, 1000);
     actualizarUbicacion();
+    <script>
+  document.getElementById("btnHome").addEventListener("click", function(e) {
+    // Si ya estamos en index.html, no hacemos nada
+    if (window.location.pathname.includes("index.html") || window.location.pathname.endsWith("/")) {
+      e.preventDefault(); // Cancela el enlace
+    } else {
+      window.location.href = "index.html"; // Redirige si no estamos en Home
+    }
+  });
+
   </script>
 </body>
 </html>
