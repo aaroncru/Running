@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Running</title>
+  <title>Fondo Animado con Botones</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papNM8s+K1NU4X2Rx9VvRr1x9vY3EZzh8f6T6pz8Vq8ZFlMGCogqK9ZmZ0k0gEBeqEKzFYu7HlAgl0P+jrB3xg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow: hidden;
       font-family: Arial, sans-serif;
+      overflow: hidden;
     }
 
     body {
       background: linear-gradient(-45deg, #00c6ff, #0072ff, #00ff99, #00c6ff);
       background-size: 400% 400%;
       animation: moverFondo 15s ease infinite;
+      position: relative;
     }
 
     @keyframes moverFondo {
@@ -28,13 +31,51 @@
     h1 {
       color: white;
       text-align: center;
-      padding-top: 2%;
+      padding-top: 5%;
       font-size: 3rem;
       text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .footer-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #333; /* Franja gris oscura */
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      z-index: 1000;
+    }
+
+    .footer-button {
+      color: white;
+      text-align: center;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .footer-button i {
+      font-size: 24px;
+      margin-bottom: 5px;
     }
   </style>
 </head>
 <body>
-  <h1>Running Anchorage</h1>
+  <h1>Arctic Dash</h1>
+
+  <div class="footer-bar">
+    <a href="#" class="footer-button">
+      <i class="fas fa-home"></i><br>
+      Home
+    </a>
+    <a href="#" class="footer-button">
+      <i class="fas fa-running"></i><br>
+      Let's Run
+    </a>
+    <a href="#" class="footer-button">
+      <i class="fas fa-chart-line"></i><br>
+      Stats
+    </a>
+  </div>
 </body>
 </html>
