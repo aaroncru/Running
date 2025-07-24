@@ -117,23 +117,27 @@
     const userMarker = L.marker([0, 0]).addTo(map);
 
     // Actualiza la ubicación cada segundo
-    function actualizarUbicacion() {
-      navigator.geolocation.getCurrentPosition(pos => {
-        const lat = pos.coords.latitude;
-        const lng = pos.coords.longitude;
-        const accuracy = pos.coords.accuracy;
+ let primeraVez = true;
 
-        userMarker.setLatLng([lat, lng]);
-        map.setView([lat, lng], 17);
-      }, err => {
-        console.error("Error obteniendo ubicación:", err);
-      }, {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
-      });
+function actualizarUbicacion() {
+  navigator.geolocation.getCurrentPosition(pos => {
+    const lat = pos.coords.latitude;
+    const lng = pos.coords.longitude;
+
+    userMarker.setLatLng([lat, lng]);
+
+    if (primeraVez) {
+      map.setView([lat, lng], 17); // Solo centramos la primera vez
+      primeraVez = false;
     }
-
+  }, err => {
+    console.error("Error obteniendo ubicación:", err);
+  }, {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  });
+}
     // Actualiza cada segundo
     setInterval(actualizarUbicacion, 500);
 
