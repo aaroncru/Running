@@ -4,28 +4,53 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Arctic Dash - Home</title>
+
+  <!-- Iconos Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Leaflet CSS y JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   <style>
-    body, html {
+    * {
       margin: 0;
       padding: 0;
-      height: 100%;
-      font-family: Arial;
-      background: #0072ff;
+      box-sizing: border-box;
     }
+
+    html, body {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    body {
+      background: linear-gradient(270deg, #00c9ff, #92fe9d);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     h1 {
       color: white;
       text-align: center;
       padding: 1rem;
     }
+
     #map {
       height: 70%;
       width: 90%;
       margin: auto;
       border-radius: 15px;
+      z-index: 1;
     }
+
     .footer-bar {
       position: fixed;
       bottom: 0;
@@ -34,13 +59,16 @@
       display: flex;
       justify-content: space-around;
       padding: 6px 0;
+      z-index: 2;
     }
+
     .footer-button {
       color: white;
       text-align: center;
       font-size: 12px;
       text-decoration: none;
     }
+
     .footer-button i {
       display: block;
       font-size: 18px;
@@ -48,7 +76,9 @@
   </style>
 </head>
 <body>
+
   <h1>Arctic Dash</h1>
+
   <div id="map"></div>
 
   <div class="footer-bar">
@@ -61,22 +91,37 @@
     const map = L.map('map').setView([0, 0], 15);
     const marker = L.marker([0, 0]).addTo(map);
 
+    // Reemplaza "TU_TOKEN_MAPBOX" con tu token real
     L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v12/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWFyb25jcnUiLCJhIjoiY21kZ2pjeDF1MDNiYTJxb2dibWw2Z2J6eCJ9.du-ro4y6fz92Vh1DyrU7fg', {
       maxZoom: 20,
       tileSize: 512,
       zoomOffset: -1
     }).addTo(map);
 
-    function updateLocation() {
+    let primeraVez = true;
+
+    function actualizarUbicacion() {
       navigator.geolocation.getCurrentPosition(pos => {
-        const { latitude, longitude } = pos.coords;
-        marker.setLatLng([latitude, longitude]);
-        map.setView([latitude, longitude], 17);
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+
+        marker.setLatLng([lat, lng]);
+
+        if (primeraVez) {
+          map.setView([lat, lng], 17);
+          primeraVez = false;
+        }
+      }, err => {
+        console.error("Error obteniendo ubicación:", err);
+      }, {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
       });
     }
 
-    setInterval(updateLocation, 1000);
-    updateLocation();
+    setInterval(actualizarUbicacion, 1000);
+    actualizarUbicacion();
   </script>
 </body>
 </html>
