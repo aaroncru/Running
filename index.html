@@ -110,12 +110,19 @@
     };
 
     function showScreen(screenName) {
-      for (let key in screens) {
-        screens[key].style.display = "none";
-      }
-      screens[screenName].style.display = "block";
-    }
+     for (let key in screens) {
+    screens[key].style.display = "none";
+  }
+  screens[screenName].style.display = "block";
 
+  // Asegurar que los mapas se rendericen bien si su contenedor estuvo oculto
+  if (screenName === "home" && mapHome) {
+    setTimeout(() => mapHome.invalidateSize(), 100);
+  }
+  if (screenName === "run" && mapRun) {
+    setTimeout(() => mapRun.invalidateSize(), 100);
+  }
+    }
     document.getElementById("btnHome").addEventListener("click", () => showScreen("home"));
     document.getElementById("btnRun").addEventListener("click", () => showScreen("run"));
     document.getElementById("btnStats").addEventListener("click", () => showScreen("stats"));
