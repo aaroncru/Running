@@ -88,7 +88,7 @@
       height: 100%;
     }
 
-    #pantallaHome, {
+    #pantallaHome {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -211,7 +211,7 @@
   <div class="run-button-group">
     <button class="run-btn" onclick="toggleOptions('easyOptions')">Easy Run</button>
     <div class="options-container" id="easyOptions">
-      <button class="option-btn" onclick="mostrarRuta3km()">3 km</button>
+      <button class="option-btn" id ="btn3km" onclick="mostrarRuta3km()">3 km</button>
       <button class="option-btn">4 km</button>
       <button class="option-btn">5 km</button>
     </div>
@@ -363,40 +363,35 @@
 });
 
     };
-    function mostrarRuta3km() {
-  // Limpia ruta anterior si existe
-  if (runRoutePolyline) {
-    mapRun.removeLayer(runRoutePolyline);
-  }
-  if (startMarker) {
-    mapRun.removeLayer(startMarker);
-  }
-  if (endMarker) {
-    mapRun.removeLayer(endMarker);
-  }
+  function mostrarRuta3km() {
+  const accessToken = 'pk.eyJ1IjoiYWFyb25jcnUiLCJhIjoiY21kZ2pjeDF1MDNiYTJxb2dibWw2Z2J6eCJ9.du-ro4y6fz92Vh1DyrU7fg';
 
-  // Coordenadas ficticias cercanas al centro inicial
-  const rutaCoords = [
-    [61.218456, -149.906640], // inicio
-    [61.211404, -149.920233],
-    [61.208323, -149.923724], // punto medio
-    [61.205695, -149.932530]  // fin
-  ];
+  // Coordenadas de inicio y fin en formato [lat, lng]
+  const inicio = [61.218484, -149.906390]; // Ejemplo: centro de Anchorage
+  const fin = [61.205673, -149.932616];    // Aprox. 3 km caminando
 
-  // Dibujar ruta
-  runRoutePolyline = L.polyline(rutaCoords, {
-    color: 'blue',
-    weight: 5
-  }).addTo(mapRun);
+  const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${inicio[1]},${inicio[0]};${fin[1]},${fin[0]}?geometries=geojson&access_token=${accessToken}`;
 
-  // Marcador de inicio
-  startMarker = L.marker(rutaCoords[0], { title: "Inicio" }).addTo(mapRun);
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      const coordinates = data.routes[0].geometry.coordinates;
+      const latlngs = coordinates.map(coord => [coord[1], coord[0]]); // Convertir a [lat, lng]
 
-  // Marcador de final
-  endMarker = L.marker(rutaCoords[rutaCoords.length - 1], { title: "Fin" }).addTo(mapRun);
+      // Eliminar ruta previa si ya existe
+      if (window.rutaActual) {
+        mapRun.removeLayer(window.rutaActual);
+      }
 
-  // Ajustar vista al recorrido
-  mapRun.fitBounds(runRoutePolyline.getBounds());
+      // Dibujar la nueva ruta en el mapa
+      window.rutaActual = L.polyline(latlngs, { color: '#00cc66', weight: 5 }).addTo(mapRun);
+
+      // Ajustar zoom al tamaño de la ruta
+      mapRun.fitBounds(window.rutaActual.getBounds());
+    })
+    .catch(error => {
+      console.error("Error al mostrar la ruta de 3km:", error);
+    });
 }
 
   </script>
