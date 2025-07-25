@@ -207,7 +207,7 @@
   <div class="run-button-group">
     <button class="run-btn" onclick="toggleOptions('easyOptions')">Easy Run</button>
     <div class="options-container" id="easyOptions">
-      <button class="option-btn">3 km</button>
+      <button class="option-btn" onclick="mostrarRuta3km()">3 km</button>
       <button class="option-btn">4 km</button>
       <button class="option-btn">5 km</button>
     </div>
@@ -266,6 +266,10 @@
     };
 
     let mapHome, markerHome, mapRun, markerRun;
+    let runRoutePolyline = null;
+    let startMarker = null;
+    let endMarker = null;
+
 
     function initBothMaps(lat, lng) {
       mapHome = L.map('mapHome').setView([lat, lng], 16);
@@ -336,6 +340,42 @@
         maximumAge: 0
       });
     };
+    function mostrarRuta3km() {
+  // Limpia ruta anterior si existe
+  if (runRoutePolyline) {
+    mapRun.removeLayer(runRoutePolyline);
+  }
+  if (startMarker) {
+    mapRun.removeLayer(startMarker);
+  }
+  if (endMarker) {
+    mapRun.removeLayer(endMarker);
+  }
+
+  // Coordenadas ficticias cercanas al centro inicial
+  const rutaCoords = [
+    [61.217, -149.900], // inicio
+    [61.218, -149.905],
+    [61.219, -149.910], // punto medio
+    [61.220, -149.915]  // fin
+  ];
+
+  // Dibujar ruta
+  runRoutePolyline = L.polyline(rutaCoords, {
+    color: 'blue',
+    weight: 5
+  }).addTo(mapRun);
+
+  // Marcador de inicio
+  startMarker = L.marker(rutaCoords[0], { title: "Inicio" }).addTo(mapRun);
+
+  // Marcador de final
+  endMarker = L.marker(rutaCoords[rutaCoords.length - 1], { title: "Fin" }).addTo(mapRun);
+
+  // Ajustar vista al recorrido
+  mapRun.fitBounds(runRoutePolyline.getBounds());
+}
+
   </script>
 </body>
 </html>
