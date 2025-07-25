@@ -36,6 +36,7 @@
     }
 
     .screen {
+      display: none;
       position: absolute;
       top: 0;
       left: 0;
@@ -188,7 +189,7 @@
 
 <body>
   <!-- Home -->
-  <div id="pantallaHome" class="screen">
+  <div id="pantallaHome" class="screen" style="display: block;">
     <h1>Arctic Dash</h1>
     <div class="map-container"><div id="mapHome"></div></div>
   </div>
@@ -302,11 +303,11 @@
     }
 
     window.onload = () => {
+      showScreen("home");
       navigator.geolocation.getCurrentPosition(pos => {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
         initBothMaps(lat, lng);
-        showScreen("home");
         setInterval(() => {
           navigator.geolocation.getCurrentPosition(pos => {
             updatePosition(pos.coords.latitude, pos.coords.longitude);
