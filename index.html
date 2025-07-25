@@ -99,32 +99,54 @@
       animation: gradientMove 12s ease infinite;
     }
 
-    .run-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      padding: 15px;
-      background-color: rgba(200, 200, 200, 0.3);
-      flex-wrap: wrap;
-    }
+.run-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
 
-    .run-option {
+.run-button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.run-btn {
+  background-color: #2d6a4f;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  min-width: 100px;
+}
+
+.options-container {
+  display: none;
+  flex-direction: column;
+  margin-top: 10px;
+  gap: 5px;
+}
+
+.option-btn {
+  background-color: #74c69d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  min-width: 80px;
+}
+
+  .run-option {
       position: relative;
       width: 100px;
       flex-shrink: 0;
     }
-
-    .run-btn {
-      background-color: #2196f3;
-      color: white;
-      border: none;
-      padding: 10px 0;
-      border-radius: 8px;
-      font-size: 14px;
-      width: 100%;
-      cursor: pointer;
-    }
-
     .submenu {
       display: none;
       flex-direction: column;
@@ -175,22 +197,39 @@
   <div id="pantallaRun" class="screen">
     <h1>Let's Run</h1>
     <div class="map-container"><div id="mapRun"></div></div>
-    <div class="run-buttons">
-      <div class="run-option">
-        <button class="run-btn" id="btnEasy">Easy Run</button>
-        <div class="submenu" id="submenuEasy">
-          <button class="submenu-btn">3 km</button>
-          <button class="submenu-btn">4 km</button>
-          <button class="submenu-btn">5 km</button>
-        </div>
-      </div>
-      <div class="run-option">
-        <button class="run-btn">Medium Run</button>
-      </div>
-      <div class="run-option">
-        <button class="run-btn">Long Run</button>
-      </div>
+  <div class="run-buttons">
+  <!-- Easy Run -->
+  <div class="run-button-group">
+    <button class="run-btn" onclick="toggleOptions('easyOptions')">Easy Run</button>
+    <div class="options-container" id="easyOptions">
+      <button class="option-btn">3 km</button>
+      <button class="option-btn">4 km</button>
+      <button class="option-btn">5 km</button>
     </div>
+  </div>
+
+  <!-- Medium Run -->
+  <div class="run-button-group">
+    <button class="run-btn" onclick="toggleOptions('mediumOptions')">Medium Run</button>
+    <div class="options-container" id="mediumOptions">
+      <button class="option-btn">7 km</button>
+      <button class="option-btn">10 km</button>
+      <button class="option-btn">12 km</button>
+    </div>
+  </div>
+
+  <!-- Long Run -->
+  <div class="run-button-group">
+  <button class="run-btn" onclick="toggleOptions('longOptions')">Long Run</button>
+  <div class="options-container" id="longOptions">
+    <button class="option-btn">15 km</button>
+    <button class="option-btn">18 km</button>
+    <button class="option-btn">21 km</button>
+    <button class="option-btn">30 km</button>
+    <button class="option-btn">42 km</button>
+  </div>
+</div>
+
   </div>
 
   <!-- Stats -->
@@ -281,6 +320,11 @@
         maximumAge: 0
       });
     };
+    function toggleOptions(id) {
+  const options = document.getElementById(id);
+  options.style.display = options.style.display === "flex" ? "none" : "flex";
+}
+
   </script>
 </body>
 </html>
