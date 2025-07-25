@@ -109,31 +109,27 @@
 }
 .run-buttons {
   display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
-  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 15px;
+  background-color: rgba(200, 200, 200, 0.5);
 }
 
-.run-btn {
-  background-color: #00c9ff;
-  border: none;
-  color: white;
-  padding: 12px 20px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.run-btn:hover {
-  background-color: #009ecf;
-}
 .run-option {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100px; /* Fijamos el ancho para que no se deforme */
+}
+
+.run-btn {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%; /* Que use el 100% del ancho del contenedor */
+  cursor: pointer;
 }
 
 .submenu {
@@ -141,16 +137,18 @@
   flex-direction: column;
   gap: 5px;
   margin-top: 10px;
+  width: 100%;
 }
 
 .submenu-btn {
   background-color: #4caf50;
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 6px 0;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
+  width: 100%;
 }
 
 .submenu-btn:hover {
@@ -173,6 +171,7 @@
   </div>
 
   <div class="run-buttons">
+
     <div class="run-option">
       <button class="run-btn" id="btnEasy">Easy Run</button>
       <div class="submenu" id="submenuEasy">
