@@ -129,6 +129,33 @@
 .run-btn:hover {
   background-color: #009ecf;
 }
+.run-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.submenu {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.submenu-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.submenu-btn:hover {
+  background-color: #388e3c;
+}
 
   </style>
 </head>
@@ -144,12 +171,21 @@
   <div class="map-container">
     <div id="mapRun"></div>
   </div>
+
   <div class="run-buttons">
-    <button class="run-btn">Easy Run</button>
+    <div class="run-option">
+      <button class="run-btn" id="btnEasy">Easy Run</button>
+      <div class="submenu" id="submenuEasy">
+        <button class="submenu-btn">3 km</button>
+        <button class="submenu-btn">4 km</button>
+        <button class="submenu-btn">5 km</button>
+      </div>
+    </div>
     <button class="run-btn">Medium Run</button>
     <button class="run-btn">Long Run</button>
   </div>
 </div>
+
 
 
   <div id="pantallaStats" class="screen">
@@ -243,6 +279,10 @@ function showScreen(screenName) {
         maximumAge: 0
       });
     };
+     document.getElementById("btnEasy").addEventListener("click", () => {
+    const submenu = document.getElementById("submenuEasy");
+    submenu.style.display = submenu.style.display === "flex" ? "none" : "flex";
+  });
   </script>
 </body>
 </html>
