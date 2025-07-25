@@ -36,14 +36,9 @@
     }
 
     .screen {
-      display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: calc(100% - 60px); /* Ajuste por footer */
-      overflow-y: auto;
-      padding-top: 60px;
+     display: none;
+    height: calc(100% - 60px); /* resta el tamaño del footer */
+    overflow: hidden;
     }
 
     .footer-bar {
@@ -55,7 +50,7 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
-      z-index: 999;
+      z-index: 9999;
     }
       .footer-button {
       display: flex;
