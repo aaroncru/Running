@@ -363,36 +363,61 @@
 });
 
     };
-  function mostrarRuta3km() {
-  const accessToken = 'pk.eyJ1IjoiYWFyb25jcnUiLCJhIjoiY21kZ2pjeDF1MDNiYTJxb2dibWw2Z2J6eCJ9.du-ro4y6fz92Vh1DyrU7fg';
+function dibujarRutaConPuntos(ruta) {
+  // Eliminar ruta y marcadores anteriores si existen
+  if (window.rutaActual) {
+    mapRun.removeLayer(window.rutaActual);
+  }
+  if (window.markerInicio) {
+    mapRun.removeLayer(window.markerInicio);
+  }
+  if (window.markerFinal) {
+    mapRun.removeLayer(window.markerFinal);
+  }
 
-  // Coordenadas de inicio y fin en formato [lat, lng]
-  const inicio = [61.218484, -149.906390]; // Ejemplo: centro de Anchorage
-  const fin = [61.205673, -149.932616];    // Aprox. 3 km caminando
+  // Dibujar la línea de la ruta
+  window.rutaActual = L.polyline(ruta, { color: "purple", weight: 4 }).addTo(mapRun);
 
-  const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${inicio[1]},${inicio[0]};${fin[1]},${fin[0]}?geometries=geojson&access_token=${accessToken}`;
+  // Punto de inicio (azul)
+  window.markerInicio = L.circleMarker(ruta[0], {
+    radius: 8,
+    color: 'blue',
+    fillColor: 'blue',
+    fillOpacity: 0.9
+  }).addTo(mapRun);
 
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      const coordinates = data.routes[0].geometry.coordinates;
-      const latlngs = coordinates.map(coord => [coord[1], coord[0]]); // Convertir a [lat, lng]
+  // Punto final (rojo)
+  window.markerFinal = L.circleMarker(ruta[ruta.length - 1], {
+    radius: 8,
+    color: 'red',
+    fillColor: 'red',
+    fillOpacity: 0.9
+  }).addTo(mapRun);
 
-      // Eliminar ruta previa si ya existe
-      if (window.rutaActual) {
-        mapRun.removeLayer(window.rutaActual);
-      }
-
-      // Dibujar la nueva ruta en el mapa
-      window.rutaActual = L.polyline(latlngs, { color: '#00cc66', weight: 5 }).addTo(mapRun);
-
-      // Ajustar zoom al tamaño de la ruta
-      mapRun.fitBounds(window.rutaActual.getBounds());
-    })
-    .catch(error => {
-      console.error("Error al mostrar la ruta de 3km:", error);
-    });
+  // Ajustar el mapa para mostrar toda la ruta
+  mapRun.fitBounds(window.rutaActual.getBounds());
 }
+function mostrarRuta3km() {
+  const ruta = [
+    [61.218489, -149.906379],
+    [61.205669, -149.932659]
+  ];
+  dibujarRutaConPuntos(ruta);
+}
+
+function mostrarRuta5km() {
+  const ruta = [
+    [61.213570, -149.887507],
+    [61.203743, -149.887559],
+    [61.205095, -149.897997],
+    [61.205212, -149.905176],
+    [61.206109, -149.908858],
+    [61.207389, -149.918070],
+    [61.203634, -149.945982]
+  ];
+  dibujarRutaConPuntos(ruta);
+}
+
 
   </script>
 </body>
