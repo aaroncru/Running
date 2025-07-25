@@ -252,24 +252,6 @@
       stats: document.getElementById("pantallaStats")
     };
 
-    function showScreen(screenName) {
-      for (let key in screens) {
-        screens[key].style.display = "none";
-      }
-      screens[screenName].style.display = "block";
-      if (screenName === "home" && mapHome) setTimeout(() => mapHome.invalidateSize(), 100);
-      if (screenName === "run" && mapRun) setTimeout(() => mapRun.invalidateSize(), 100);
-    }
-
-    document.getElementById("btnHome").addEventListener("click", () => showScreen("home"));
-    document.getElementById("btnRun").addEventListener("click", () => showScreen("run"));
-    document.getElementById("btnStats").addEventListener("click", () => showScreen("stats"));
-
-    document.getElementById("btnEasy").addEventListener("click", () => {
-      const submenu = document.getElementById("submenuEasy");
-      submenu.style.display = submenu.style.display === "flex" ? "none" : "flex";
-    });
-
     let mapHome, markerHome, mapRun, markerRun;
 
     function initBothMaps(lat, lng) {
@@ -301,9 +283,30 @@
       }
     }
 
-    window.onload = () => {
-      showScreen("home");
-      navigator.geolocation.getCurrentPosition(pos => {
+    function toggleOptions(id) {
+  const options = document.getElementById(id);
+  options.style.display = options.style.display === "flex" ? "none" : "flex";
+}
+  window.onload = () => {
+      const screens = {
+    home: document.getElementById("pantallaHome"),
+    run: document.getElementById("pantallaRun"),
+    stats: document.getElementById("pantallaStats")
+  };
+    function showScreen(screenName) {
+      for (let key in screens) {
+        screens[key].style.display = "none";
+      }
+      screens[screenName].style.display = "block";
+      if (screenName === "home" && mapHome) setTimeout(() => mapHome.invalidateSize(), 100);
+      if (screenName === "run" && mapRun) setTimeout(() => mapRun.invalidateSize(), 100);
+    }
+   document.getElementById("btnHome").addEventListener("click", () => showScreen("home"));
+    document.getElementById("btnRun").addEventListener("click", () => showScreen("run"));
+    document.getElementById("btnStats").addEventListener("click", () => showScreen("stats"));
+     showScreen("home");
+    
+     navigator.geolocation.getCurrentPosition(pos => {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
         initBothMaps(lat, lng);
@@ -320,11 +323,6 @@
         maximumAge: 0
       });
     };
-    function toggleOptions(id) {
-  const options = document.getElementById(id);
-  options.style.display = options.style.display === "flex" ? "none" : "flex";
-}
-
   </script>
 </body>
 </html>
