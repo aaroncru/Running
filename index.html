@@ -244,4 +244,43 @@
 
       mapRun = L.map('mapRun').setView([lat, lng], 16);
       markerRun = L.marker([lat, lng]).addTo(mapRun);
-      L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v12/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWFyb25jcnUiLCJhIjoiY21kZ2pjeDF1MDNiYTJxb2dibWw2Z2J6eCJ9.du_
+      L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v12/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWFyb25jcnUiLCJhIjoiY21kZ2pjeDF1MDNiYTJxb2dibWw2Z2J6eCJ9.du-ro4y6fz92Vh1DyrU7fg', {
+        maxZoom: 20,
+        tileSize: 512,
+        zoomOffset: -1
+      }).addTo(mapRun);
+    }
+
+    function updatePosition(lat, lng) {
+      if (markerHome) {
+        markerHome.setLatLng([lat, lng]);
+        mapHome.setView([lat, lng]);
+      }
+      if (markerRun) {
+        markerRun.setLatLng([lat, lng]);
+        mapRun.setView([lat, lng]);
+      }
+    }
+
+    window.onload = () => {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        initBothMaps(lat, lng);
+        showScreen("home");
+        setInterval(() => {
+          navigator.geolocation.getCurrentPosition(pos => {
+            updatePosition(pos.coords.latitude, pos.coords.longitude);
+          });
+        }, 1000);
+      }, err => {
+        console.error("Error obteniendo ubicación:", err);
+      }, {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      });
+    };
+  </script>
+</body>
+</html>
