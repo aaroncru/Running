@@ -200,6 +200,7 @@ function showScreen(screenName) {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
         initBothMaps(lat, lng);
+         showScreen("home");
         // Actualizar cada segundo
         setInterval(() => {
           navigator.geolocation.getCurrentPosition(pos => {
