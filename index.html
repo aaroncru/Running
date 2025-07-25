@@ -109,16 +109,16 @@
 }
 .run-buttons {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 12px;
   padding: 15px;
   background-color: rgba(200, 200, 200, 0.5);
+  flex-wrap: wrap;
 }
 
 .run-option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100px; /* Fijamos el ancho para que no se deforme */
+  position: relative;
+  width: 100px;
 }
 
 .run-btn {
@@ -128,7 +128,7 @@
   padding: 10px 0;
   border-radius: 8px;
   font-size: 14px;
-  width: 100%; /* Que use el 100% del ancho del contenedor */
+  width: 100%;
   cursor: pointer;
 }
 
@@ -170,21 +170,22 @@
     <div id="mapRun"></div>
   </div>
 
-  <div class="run-buttons">
-
-    <div class="run-option">
-      <button class="run-btn" id="btnEasy">Easy Run</button>
-      <div class="submenu" id="submenuEasy">
-        <button class="submenu-btn">3 km</button>
-        <button class="submenu-btn">4 km</button>
-        <button class="submenu-btn">5 km</button>
-      </div>
+ <div class="run-buttons">
+  <div class="run-option">
+    <button class="run-btn" id="btnEasy">Easy Run</button>
+    <div class="submenu" id="submenuEasy">
+      <button class="submenu-btn">3 km</button>
+      <button class="submenu-btn">4 km</button>
+      <button class="submenu-btn">5 km</button>
     </div>
+  </div>
+  <div class="run-option">
     <button class="run-btn">Medium Run</button>
+  </div>
+  <div class="run-option">
     <button class="run-btn">Long Run</button>
   </div>
 </div>
-
 
 
   <div id="pantallaStats" class="screen">
